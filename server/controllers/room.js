@@ -3,7 +3,7 @@ const { StatusCodes } = require('http-status-codes')
 var mongoose = require('mongoose')
 var Chat = require('../models/chat')
 var { Room, RoomMember, RoomSchedule, RoomAnnouncement, RoomInvite } = require('../models/room')
-var User = require('../models/user')
+var { User } = require('../models/user')
 var Notification = require('../models/notifications')
 var Joi = require('joi')
 const { hasGame } = require('../util/games')
@@ -556,6 +556,29 @@ exports.chat = (io) => {
 		}
 		socket.join(roomId)
 
+		// notify user of other members connected
+		if(userId && permission) {
+			socket.data.trackMemberActive = true
+			socket.data.trackMemberActiveUserId = userId
+			io.to(roomId).emit('user-joined', userId)
+			socket.on('disconnect', () => {
+				io.to(roomId).emit('user-left', userId)
+			})
+		}
+		io.in(roomId).fetchSockets()
+			.then((sockets) => {
+				let userIds = []
+				for(const socket of sockets) {
+					if(socket.data.trackMemberActive) {
+						const socketUserId = socket.data.trackMemberActiveUserId
+						if(userId !== socketUserId) {
+							userIds.push(socketUserId)
+						}
+					}
+				}
+				socket.emit('user-joined', userIds)
+			})
+
 		// send last 10 messages
 		const msgs = await Chat.aggregate()
 			.match({
@@ -574,7 +597,7 @@ exports.chat = (io) => {
 		// receive message
 		if (permission) {
 			socket.emit('status', 'allowed to chat')
-			socket.on('message', async (msg) => {
+			socket.on('message', async (msg, fn) => {
 				// save message in database
 				msg = new Chat({ message: msg, from: new mongoose.Types.ObjectId(userId), to: new mongoose.Types.ObjectId(roomId) })
 				msg = await msg.save()
@@ -590,6 +613,7 @@ exports.chat = (io) => {
 					.exec()
 				// send message to all listeners
 				io.to(roomId).emit('message', messagesChatInfo(msg))
+				fn('done')
 			})
 		} else {
 			socket.emit('status', 'not allowed to chat')
