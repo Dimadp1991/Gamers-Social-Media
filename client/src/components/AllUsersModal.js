@@ -66,8 +66,8 @@ export default function AllUsersModal({ open, onClose, Profiles, MyProfile, frie
 
             if (IsMyfriend(Profiles[i])) {
 
-                items.push(<div key={i}>
-                    <UserAvatar userId={Profiles[i].userId} circle size="60px" />
+                items.push(<div key={i} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+					<UserAvatar userId={Profiles[i].userId} size="60px" circle />
 
                     <label className="friend_img_label">{Profiles[i].name}</label>
                     <IoIosRemoveCircle className="Circle_icon" data-tip="remove friend"

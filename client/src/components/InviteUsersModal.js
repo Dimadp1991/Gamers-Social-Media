@@ -6,6 +6,7 @@ import { IoIosAddCircle } from 'react-icons/io'
 import { CgMoreO } from 'react-icons/cg'
 import ReactTooltip from 'react-tooltip'
 import ShowProfileComponent from './ShowProfileComponent'
+import UserAvatar from './UserAvatar'
 export default function InviteUsersModal({ open, onClose, Profiles, MyProfile, friendTo }) {
 
     const [SelectedProfile, SetSeletedProfile] = useState()
@@ -61,17 +62,16 @@ export default function InviteUsersModal({ open, onClose, Profiles, MyProfile, f
                 continue
             }
 
-            let s = 'friend_img_' + String(i)
-
             if (IsMyfriend(Profiles[i])) {
 
-                items.push(<div key={i}>
-                    <img className="friend_img" id={s} src={process.env.REACT_APP_SERVER_URL + '/api/profile/img/get_img/' + Profiles[i].userId} alt="" />
-                    <label className="friend_img_label">{Profiles[i].name}</label>
+                items.push(<div key={i} style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+					<UserAvatar userId={Profiles[i].userId} size="60px" circle />
+                    <label style={{marginLeft: '10px'}} className="friend_img_label">{Profiles[i].name}</label>
                     <IoIosAddCircle className="Circle_icon" data-tip="invite friend to room"
                         onClick={() => { friendTo(Profiles[i].userId); onClose() }} />
                     <CgMoreO className="Circle_icon" data-tip="more info" onClick={() => SetSeletedProfile(Profiles[i])} />
-                </div>)
+					<br />
+				</div>)
             }
         }
         //console.log(items)

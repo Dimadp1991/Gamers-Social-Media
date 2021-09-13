@@ -3,14 +3,11 @@ import { React, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 import MyRoomsComponent from '../components/MyRoomsComponent'
-import NewRoomForm from '../components/NewRoomForm'
 import axios from '../services/axios.config'
 import { selectUser } from '../state/userSlice'
 import './RoomsPage.css'
 export default function RoomsPage() {
 
-
-    const [shownewRoomFormResults, /*setShownewRoomForm*/] = useState(false)
 
     const { user } = useSelector(selectUser)
     const [all_profiles_list, set_profiles_list] = useState([])
@@ -71,25 +68,14 @@ export default function RoomsPage() {
                 <div style={{ position: 'relative', left: '0', right: '0', zIndex: '999' }} className=""><img src="images/rooms_queen.png" /></div>
             </div>
             <div className="container">
-                <div className="row mt-5">
-                    <div className="col-12 my-5">
 
                         <ReactTooltip />
-                        {shownewRoomFormResults ? <NewRoomForm /> : null}
 
                         <MyRoomsComponent Profiles_RC={all_profiles_list} MyProfile_RC={userProfile} />
 
                         {/*    <RiChatNewLine id="newRoomForm_btn" data-tip="Create New Room" onClick={() => setShownewRoomForm(!shownewRoomFormResults)}>Create New Room</RiChatNewLine> */}
                         {/*   <div id="newRoomForm_btn" data-tip="Create New Room" onClick={() => setShownewRoomForm(!shownewRoomFormResults)}><RoomCard game="" img="images/addnewroom.png" /></div>
                         */}
-
-                    </div>
-
-
-
-
-
-                </div>
             </div>
         </div>
     )

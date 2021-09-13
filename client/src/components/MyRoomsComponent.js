@@ -46,6 +46,7 @@ export default function MyRoomsComponent(/*{ Profiles_RC,MyProfile_RC } */) {
                     //console.log(info.data.image)
 
 
+
                     SetMyRoomsList(MyRooms =>
                         [...MyRooms, <div key={i} className="room_card_" onClick={() => { SetFocusedRoom(room); SetOpenRoomOptions(true) }}>
                             <RoomCard game={room.name} img={info.data.image} />
@@ -85,27 +86,12 @@ export default function MyRoomsComponent(/*{ Profiles_RC,MyProfile_RC } */) {
     return (
         <div>
             <div className="container-md" id="my_rooms_comp_old">
-                <ul className="list-group list-group-horizontal-md room-list" style={{ listStyleType: 'none' }}>
 
-                    {/* <label id="rooms_lable">My ROOMS</label> */}
-
-
-
-
-
-
-
-                    {/*           <Carousel infiniteLoop useKeyboardArrows onChange={(index, obj) => {
-                    SetRoomIndex(parseInt(obj.key.slice(2, 3)))
-                }} > */}
+                <div className="row mt-5">
+					<RoomCard onClick={() => setShownewRoomForm(!shownewRoomFormResults)} game="" img="images/addnewroom.png" />
                     {MyRooms}
+				</div>
 
-
-                    {/*  </Carousel> */}
-
-                    <div id="newRoomForm_btn" data-tip="Create New Room" onClick={() => setShownewRoomForm(!shownewRoomFormResults)}><RoomCard game="" img="images/addnewroom.png" /></div>
-
-                </ul>
                 <ReactTooltip />
                 {shownewRoomFormResults ? <NewRoomForm /> : null}
             </div>

@@ -21,7 +21,7 @@ export default function NewRoomForm() {
 
         axios.post('/room/', new_room).then((res) => {
             // return ReactDOM.createPortal(`/room/${res.data}`, this.containerEl)
-            window.open(`/room/${res.data}`, '_blank')
+            window.location = `/room/${res.data}`
             $('#new_room_form_error').text('')
         }).catch(() => {
             if (new_room.name == '') {

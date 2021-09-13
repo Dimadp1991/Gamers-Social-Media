@@ -507,9 +507,9 @@ export default function Members() {
 										<FaWindowClose id="close_country_icon" className="close_icon edit_icon hideIcon" data-tip="close"
 											onClick={CloseCountryEdit} />
 
-									</div>
-									<div className="row">
-										<img id="country_img" />
+										<div className="float-right mx-3">
+											<img id="country_img" />
+										</div>
 									</div>
 
 
@@ -589,19 +589,14 @@ export default function Members() {
 
 
 								<div id="FriendsComponent" className="row container" >
-									<ul className="list-group list-group-horizontal-md room-list" style={{ listStyleType: 'none' }}>
-										{Carouselitems.map((item, i) => <div key={i}>
+									<div style={{ listStyleType: 'none' }} className="row list-group list-group-horizontal-md room-list">
+
+									{Carouselitems.map((item, i) => <div key={i}>
 											<Link to={`/friend_profile/${item.id}`}>
 												<RoomCard game={item.name} img={process.env.REACT_APP_SERVER_URL + '/api/profile/img/get_img/' + item.id} fallbackImg={'https://avatars.dicebear.com/api/bottts/' + item.id + '.svg'} />
 											</Link>
 										</div>)}
-
-										{/* <Carousel infiniteLoop useKeyboardArrows autoPlay>
-							{Carouselitems}
-						</Carousel> 
-						
-						
-						*/}</ul>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -12,7 +12,8 @@ export default function RoomCard(props) {
 					cursor: 'pointer',
 					margin: '5px',
 					boxSizing: 'border-box',
-					position: 'relative' }}>
+					position: 'relative' }}
+					onClick={props.onClick}>
 				<div className="room_info" 
 						style={{
 							position: 'absolute',
